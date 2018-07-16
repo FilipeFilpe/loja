@@ -23,7 +23,7 @@
                     $essaEhCategoria = $produto->getCategoria()->getId() == $categoria->getId();
                     $selecao = $essaEhCategoria ? "selected='selected'" : "";
                 
-                    echo "<option ".$selecao." value='".$categoria->getId."'>".$categoria->getNome()."</option>";                    
+                    echo "<option ".$selecao." value='".$categoria->getId()."'>".$categoria->getNome()."</option>";                    
                 endforeach
             ?>
         </select>

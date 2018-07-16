@@ -8,18 +8,18 @@ function listaProdutos($conexao){
     $resultado = mysqli_query($conexao, "select p.*, c.nome as categoria_nome from produtos as p join categorias as c on c.id=p.categoria_id");
     while ($produto_array = mysqli_fetch_assoc($resultado)) {
         
-        $produto = new Produto();
-        
         $categoria = new Categoria();
         $categoria->setNome($produto_array['categoria_nome']);
-
+        
+        $nome = $produto_array['nome'];
+        $preco = $produto_array['preco'];
+        $descricao = $produto_array['descricao'];
+        $categoria = $categoria;
+        $usado = $produto_array['usado'];
+        
+        $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
         $produto->setId($produto_array['id']);
-        $produto->setNome($produto_array['nome']);
-        $produto->setPreco($produto_array['preco']);
-        $produto->setDescricao($produto_array['descricao']);
-        $produto->setCategoria($categoria);
-        $produto->setUsado($produto_array['usado']);
-
+        
         array_push($produtos, $produto);
     }
     return $produtos;
@@ -40,8 +40,15 @@ function insereProduto($conexao, Produto $produto) {
 
 function alteraProduto($conexao, Produto $produto) {
 
-    $query = "update produtos set nome = '{$produto->nome}', preco = {$produto->preco}, descricao = '{$produto->descricao}', 
-            categoria_id= {$produto->categoria->id}, usado = {$produto->usado} where id = '{$produto->id}'";
+    $id = $produto->getId();
+    $nome = $produto->getNome();
+    $preco = $produto->getPreco();
+    $descricao = $produto->getDescricao();
+    $categoria = $produto->getCategoria()->getId();
+    $usado = $produto->getUsado();
+
+    $query = "update produtos set nome = '{$nome}', preco = {$preco}, descricao = '{$descricao}', 
+            categoria_id= {$categoria}, usado = {$usado} where id = '{$id}'";
 
     return mysqli_query($conexao, $query);
 }
@@ -53,15 +60,16 @@ function buscaProduto($conexao, $id) {
     $produto_buscado = mysqli_fetch_assoc($resultado);
 
     $categoria = new Categoria();
-    $categoria->id = $produto_buscado['categoria_id'];
+    $categoria->setId($produto_buscado['categoria_id']);
 
-    $produto = new Produto();
-    $produto->id = $produto_buscado['id'];
-    $produto->nome = $produto_buscado['nome'];
-    $produto->descricao = $produto_buscado['descricao'];
-    $produto->categoria = $categoria;
-    $produto->preco = $produto_buscado['preco'];
-    $produto->usado = $produto_buscado['usado'];
+    $nome = $produto_buscado['nome'];
+    $descricao = $produto_buscado['descricao'];
+    $categoria = $categoria;
+    $preco = $produto_buscado['preco'];
+    $usado = $produto_buscado['usado'];
+
+    $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+    $produto->setId($produto_buscado['id']);
 
     return $produto;
 }

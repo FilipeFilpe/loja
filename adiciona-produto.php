@@ -9,27 +9,18 @@ require_once('class/Categoria.php');
     $categoria = new Categoria();
     $categoria->setId($_POST['categoria_id']);
     
-    $produto = new Produto();
-    $produto->setNome($_POST['nome']);
-    $produto->setPreco($_POST['preco']);
-    $produto->setDescricao($_POST['descricao']);
+    $nome = $_POST['nome'];
+    $preco = $_POST['preco'];
+    $descricao = $_POST['descricao'];
     
     if(array_key_exists('usado', $_POST)) {
-        $produto->setUsado("true");
+        $usado = "true";
     } else {
-        $produto->setUsado("false");
+        $usado ="false";
     }
     
-    $produto->setCategoria($categoria);
-
-    if (array_key_exists('usado', $_POST)){
-        $produto->setUsado("true");
-    } else {
-        $produto->setUsado("false");
-    }
-
-    var_dump($produto).die();
-
+    $produto = new Produto($nome, $preco, $descricao, $categoria, $usado);
+    
     if (insereProduto($conexao, $produto)) {
         echo insereProduto($conexao, $produto);
         echo "<p class='text-success'>O produto ".$produto->getNome().", R$ ".$produto->getPreco()." foi adicionado</p>";
