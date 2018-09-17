@@ -1,6 +1,15 @@
 <?php
+    require_once('logica-usuario.php');
+
+    function carregaClasse($nomeDaClasse) {
+        require_once("class/". $nomeDaClasse .".php");
+    }
+    // Registrando uma função como autoload
+    spl_autoload_register("carregaClasse");
+
     error_reporting(E_ALL ^ E_NOTICE);
     require_once('mostra-alerta.php');
+    require_once('conecta.php');
 ?>
 
 <html>
@@ -24,6 +33,15 @@
                     <li><a href="produto-lista.php">Lista de Produtos</a></li>
                     <li><a href="contato.php">Contato</a></li>
                 </ul>
+            </div>
+
+            <div class="logado">
+                <?php
+                    if (usuarioEstaLogado()) {
+                        echo "Usuário:<br> ".usuarioLogado()."<br>";
+                        echo "<button type='button' class='btn btn-info btn-sm'><a href='logout.php'>Deslogar</a></button>";
+                    }
+                ?>
             </div>
         </div>
     </div>

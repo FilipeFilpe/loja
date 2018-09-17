@@ -18,11 +18,11 @@ $mail->SMTPAuth = true;
 $mail->Username = 'filpess@hotmail.com';
 $mail->Password = '@81392996@';
 
-$mail->SetFrom('filpess@hotmail.com', 'Filipe Sousa - Desenvolvimento Web.');
+$mail->SetFrom('filpess@hotmail.com', 'Filipe Sousa - Desenvolvimento Web');
 $mail->addAddress('filpess@hotmail.com');
 $mail->Subject = 'Email de contato da loja';
-$mail->msgHTML("<html> de: {$nome}<br/>email: {$email}<br/>mensagem: {$mensagem} </html>");
-$mail->AltBody = "de: {$nome}\nemail: {$email}\nmensagem: {$mensagem}";
+$mail->msgHTML("<html> De: {$nome}<br/>Email: {$email}<br/>Mensagem: {$mensagem} </html>");
+$mail->AltBody = "De: {$nome}\nEmail: {$email}\nMensagem: {$mensagem}";
 
 if ($mail->send()) {
     $_SESSION["success"] = "Mensagem enviada com sucesso";

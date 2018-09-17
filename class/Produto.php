@@ -1,6 +1,6 @@
 <?php
 
-class Produto {
+abstract class Produto {
 
     private $id;
     private $nome;
@@ -8,7 +8,7 @@ class Produto {
     private $descricao;
     private $categoria;
     private $usado;
-    
+
     function __construct($nome, $preco, $descricao, Categoria $categoria, $usado) {
         $this->nome = $nome;
         $this->preco = $preco;
@@ -56,4 +56,21 @@ class Produto {
             return $this->preco - ($this->preco * $valor);
         }
     }
+
+    public function temIsbn() {
+        return $this instanceof Livro;
+    }
+
+    public function temTaxaImpressao() {
+        return $this instanceof LivroFisico;
+    }
+    public function temWaterMark() {
+        return $this instanceof Ebook;
+    }
+
+    public function calculaImposto() {
+        return $this->preco * 0.195;
+    }
+
+    abstract function atualizaBaseadoEm($params);
 }

@@ -6,3 +6,22 @@ body {
     padding: 40px 15px;
     text-align: center;
 }
+
+.logado {
+    color: white;
+    float: right;
+    display: flex;
+}
+
+.logado button {
+    float: right;
+}
+
+.logado a {
+    text-decoration: none;
+    color: white;
+}
+
+.logado button {
+    margin-left: 2%;
+}
